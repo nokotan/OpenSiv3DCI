@@ -1,0 +1,4 @@
+node_modules
+test
+Siv3De2eTest.*
+build

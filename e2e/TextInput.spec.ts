@@ -1,5 +1,5 @@
 import { By, Key, ThenableWebDriver } from "selenium-webdriver";
-import { testIt } from "./Runner";
+import { eachDevice } from "./Runner";
 import { expect } from "chai";
 import test from "mocha";
 import { Local } from "browserstack-local";
@@ -45,16 +45,24 @@ test.after(async function() {
     });
 })
 
-testIt("TextInput", async function(driver: ThenableWebDriver) {
-    await driver.executeScript(preScript);
+eachDevice(function(it) {
+    it("Simple Input", async function(driver) {
+        await driver.executeScript(preScript);
 
-    const inputElement = await driver.findElement(By.id("textinput"));
-    
-    await inputElement.sendKeys("Siv3D");
+        const inputElement = await driver.findElement(By.id("textinput"));
+        await inputElement.sendKeys("Siv3D");
 
-    expect(await GetInputText(driver), "Characters should be inputted").deep.equals([ 83, 105, 118, 51, 68 ]);
+        expect(await GetInputText(driver), "Characters should be inputted").deep.equals([ 83, 105, 118, 51, 68 ]);
+    });
 
-    await inputElement.sendKeys(Key.BACK_SPACE);
+    it("Backspace", async function(driver) {
+        await driver.executeScript(preScript);
 
-    expect(await GetInputText(driver), "Characters should be deleted.").deep.equals([ 8 ]);
+        const inputElement = await driver.findElement(By.id("textinput"));
+        await inputElement.sendKeys("Siv3D");
+        await GetInputText(driver);
+        await inputElement.sendKeys(Key.BACK_SPACE);
+
+        expect(await GetInputText(driver), "Characters should be deleted.").deep.equals([ 8 ]);
+    })
 });

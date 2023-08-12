@@ -32,24 +32,56 @@ async function reportAsFailed(driver: ThenableWebDriver, reason: string) {
     await driver.executeScript(`browserstack_executor: {"action": "setSessionStatus", "arguments": {"status":"failed","reason": "${reason}"}}`);
 }
 
-export function testIt(title: string, testCase: (driver: ThenableWebDriver) => Promise<void>) {
-    SupportedDeviceConfig.forEach(function (cap) {
-        test.it(title, async function() {
-            this.timeout(60 * 1000);
-            
-            const driver = buildDriver(cap);
-            await driver.get(getUrl(cap, "Siv3De2eTest.html"));
+type WebDriverTestIteration = (driver: ThenableWebDriver) => Promise<void>;
+type WebDriverTest = (title: string, it: WebDriverTestIteration) => void;
 
-            try {
-                await testCase(driver);
-                await reportAsPassed(driver);
-            } catch (e) {
-                if (e instanceof Error) {
-                    await reportAsFailed(driver, e.message);
+const timeout = 1 * 60 * 1000;
+
+export function eachDevice(block: (it: WebDriverTest) => void) {
+    SupportedDeviceConfig.forEach(function (cap) {
+
+        test.describe(cap.friendlyBrowserName, async function() {
+            this.timeout(timeout);
+
+            const sharedState = {
+                cap,
+                driver: null as (ThenableWebDriver | null)
+            };
+
+            const allTests = this.tests;
+            
+            this.beforeAll(function() {
+                sharedState.driver = buildDriver(sharedState.cap);
+            });
+
+            this.afterAll(async function() {
+                if (!sharedState.driver) {
+                    return;
                 }
-            } finally {
-                await driver.quit();
-            }
+
+                try {
+                    if (allTests.every(test => test.isPassed())) {
+                        await reportAsPassed(sharedState.driver);
+                    } else {
+                        await reportAsFailed(sharedState.driver, "Some test was failed.");
+                    }
+                } catch(_) {
+
+                } finally {
+                    await sharedState.driver.quit();
+                }
+            });
+
+            block(function(title, it) {
+                test.it(title, async function() {
+                    const driver = sharedState.driver;
+
+                    if (driver) {
+                        await driver.get(getUrl(sharedState.cap, "Siv3De2eTest.html"));
+                        await it(driver);
+                    }
+                });
+            });
         });
     });
 }

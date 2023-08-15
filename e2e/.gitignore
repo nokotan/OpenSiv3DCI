@@ -3,3 +3,5 @@ test
 Siv3De2eTest.*
 build
 *.sh
+browserstack.err
+local.log

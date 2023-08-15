@@ -1,10 +1,6 @@
 import { By, Key, ThenableWebDriver } from "selenium-webdriver";
-import { eachDevice } from "./Runner";
+import { eachDevice } from "./RunnerFactory";
 import { expect } from "chai";
-import test from "mocha";
-import { Local } from "browserstack-local";
-
-const browserStackLocal = new Local();
 
 const preScript = `
     let inputText = [];
@@ -19,31 +15,19 @@ const preScript = `
     siv3dRegisterTextInputCallback(function(codePoint) {
         inputText.push(codePoint);
     });
+
+    window.UTF8ToString = function(text) {
+        return text;
+    }
 `;
 
 async function GetInputText(driver: ThenableWebDriver) {
     return await driver.executeScript("return Module.GetInputText();") as number[];
 }
 
-const timeout = 1 * 60 * 1000;
-
-test.before(async function() {
-    this.timeout(timeout);
-
-    await new Promise<Error | undefined>(resolve => {
-        browserStackLocal.start({
-            key: process.env.BROWSERSTACK_ACCESS_KEY
-        }, resolve);
-    });
-})
-
-test.after(async function() {
-    this.timeout(timeout);
-    
-    await new Promise<void>(resolve => {
-        browserStackLocal.stop(resolve);
-    });
-})
+async function SetTextInputText(driver: ThenableWebDriver, text: string) {
+    await driver.executeScript("_siv3dSetTextInputText(arguments[0]);", text);
+}
 
 eachDevice(function(it) {
     it("Simple Input", async function(driver) {
@@ -64,5 +48,14 @@ eachDevice(function(it) {
         await inputElement.sendKeys(Key.BACK_SPACE);
 
         expect(await GetInputText(driver), "Characters should be deleted.").deep.equals([ 8 ]);
-    })
+    });
+
+    it("SetText", async function(driver) {
+        await driver.executeScript(preScript);
+
+        await SetTextInputText(driver, "Siv3D");
+        const inputElement = await driver.findElement(By.id("textinput"));
+
+        expect(await inputElement.getText(), "Characters should be set.").equals("     ");
+    });
 });

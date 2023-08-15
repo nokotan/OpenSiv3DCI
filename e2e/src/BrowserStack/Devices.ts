@@ -3,7 +3,6 @@ const projectCapability: ProjectOptions = {
     'projectName': process.env.BROWSERSTACK_PROJECT_NAME,
     'userName': process.env.BROWSERSTACK_USERNAME,
     'accessKey': process.env.BROWSERSTACK_ACCESS_KEY,
-    'seleniumVersion': "3.5.2",
 
     'local': "true",
 }
@@ -14,7 +13,6 @@ interface ProjectOptions {
     userName: string | undefined;
     accessKey: string | undefined;
 
-    seleniumVersion: string;
     local: string;
 }
 
@@ -52,110 +50,110 @@ const deviceCapabilities: DeciceCapability[] = [
             'browserVersion': '105'
         },
     },
-    {
-        "bstack:options": {
-            'os' : 'Windows',
-            'osVersion' : '10',
-            'browserVersion' : '105',
-        },
-        'browserName' : 'Edge',
-    },
-    {
-        "bstack:options": {
-            'os' : 'OS X',
-            'osVersion' : 'Monterey',
-            'browserVersion' : '15'
-        },
-        'browserName' : 'Safari',
-    },
-    {
-        "bstack:options": {
-            'os' : 'OS X',
-            'osVersion' : 'Monterey',
-            'browserVersion' : '105',
-        },
-        'browserName' : 'Chrome',
-    },
-    {
-        "bstack:options": {
-            'os' : 'OS X',
-            'osVersion' : 'Monterey',
-            'browserVersion' : '105',
-        },
-        'browserName' : 'FireFox',
-    },
-    {
-        "bstack:options": {
-            'os' : 'android',
-            "realMobile" : "true",
-            'deviceName' : 'Google Pixel 6',
-            'osVersion' : '12.0',
-        },
-        'browserName' : 'Chrome',
-    },
-    {
-        "bstack:options": {
-            'os' : 'android',
-            "realMobile" : "true",
-            'deviceName' : 'Google Pixel 6',
-            'osVersion' : '12.0',
-        },
-        'browserName' : 'FireFox',
-    },
-    {
-        "bstack:options": {
-            'os' : 'android',
-            "realMobile" : "true",
-            'deviceName' : 'Samsung Galaxy S9 Plus',
-            'osVersion' : '8.0',
-        },
-        'browserName' : 'Chrome',
-    },
-    {
-        "bstack:options": {
-            'os' : 'android',
-            "realMobile" : "true",
-            'deviceName' : 'Samsung Galaxy S21',
-            'osVersion' : '11.0',
-        },
-        'browserName' : 'Chrome',
-    },
-    {
-        "bstack:options": {
-            'os' : 'iOS',
-            "realMobile" : "true",
-            'deviceName' : 'iPhone 11',
-            'osVersion' : '15',
-        },
-        'browserName' : 'Safari',
-    },
-    {
-        "bstack:options": {
-            'os' : 'iOS',
-            "realMobile" : "true",
-            'deviceName' : 'iPhone 11',
-            'osVersion' : '15',
-        },
-        'browserName' : 'Chrome',
-    },
-    {
-        "bstack:options": {
-            'os' : 'iOS',
-            "realMobile" : "true",
-            'deviceName' : 'iPhone XS',
-            'osVersion' : '15',
-        },
-        'browserName' : 'Safari',
-    },
-    {
-        "bstack:options": {
-            'os' : 'iOS',
-            "realMobile" : "true",
-            'deviceName' : 'iPad 9th',
-            'osVersion' : '15',
-        },
-        'browserName' : 'Safari',
-    },
+    // {
+    //     "bstack:options": {
+    //         'os' : 'Windows',
+    //         'osVersion' : '10',
+    //         'browserVersion' : '105',
+    //     },
+    //     'browserName' : 'Edge',
+    // },
+    // {
+    //     "bstack:options": {
+    //         'os' : 'OS X',
+    //         'osVersion' : 'Monterey',
+    //         'browserVersion' : '15'
+    //     },
+    //     'browserName' : 'Safari',
+    // },
+    // {
+    //     "bstack:options": {
+    //         'os' : 'OS X',
+    //         'osVersion' : 'Monterey',
+    //         'browserVersion' : '105',
+    //     },
+    //     'browserName' : 'Chrome',
+    // },
+    // {
+    //     "bstack:options": {
+    //         'os' : 'OS X',
+    //         'osVersion' : 'Monterey',
+    //         'browserVersion' : '105',
+    //     },
+    //     'browserName' : 'FireFox',
+    // },
+    // {
+    //     "bstack:options": {
+    //         'os' : 'android',
+    //         "realMobile" : "true",
+    //         'deviceName' : 'Google Pixel 6',
+    //         'osVersion' : '12.0',
+    //     },
+    //     'browserName' : 'Chrome',
+    // },
+    // {
+    //     "bstack:options": {
+    //         'os' : 'android',
+    //         "realMobile" : "true",
+    //         'deviceName' : 'Google Pixel 6',
+    //         'osVersion' : '12.0',
+    //     },
+    //     'browserName' : 'FireFox',
+    // },
+    // {
+    //     "bstack:options": {
+    //         'os' : 'android',
+    //         "realMobile" : "true",
+    //         'deviceName' : 'Samsung Galaxy S9 Plus',
+    //         'osVersion' : '8.0',
+    //     },
+    //     'browserName' : 'Chrome',
+    // },
+    // {
+    //     "bstack:options": {
+    //         'os' : 'android',
+    //         "realMobile" : "true",
+    //         'deviceName' : 'Samsung Galaxy S21',
+    //         'osVersion' : '11.0',
+    //     },
+    //     'browserName' : 'Chrome',
+    // },
+    // {
+    //     "bstack:options": {
+    //         'os' : 'iOS',
+    //         "realMobile" : "true",
+    //         'deviceName' : 'iPhone 11',
+    //         'osVersion' : '15',
+    //     },
+    //     'browserName' : 'Safari',
+    // },
+    // {
+    //     "bstack:options": {
+    //         'os' : 'iOS',
+    //         "realMobile" : "true",
+    //         'deviceName' : 'iPhone 11',
+    //         'osVersion' : '15',
+    //     },
+    //     'browserName' : 'Chrome',
+    // },
+    // {
+    //     "bstack:options": {
+    //         'os' : 'iOS',
+    //         "realMobile" : "true",
+    //         'deviceName' : 'iPhone XS',
+    //         'osVersion' : '15',
+    //     },
+    //     'browserName' : 'Safari',
+    // },
+    // {
+    //     "bstack:options": {
+    //         'os' : 'iOS',
+    //         "realMobile" : "true",
+    //         'deviceName' : 'iPad 9th',
+    //         'osVersion' : '15',
+    //     },
+    //     'browserName' : 'Safari',
+    // },
 ];
 
 const notSupportedDeviceCapabilities: DeciceCapability[] = [

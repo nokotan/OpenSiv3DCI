@@ -27,8 +27,6 @@ export class LocalRunner implements Runner {
             const sharedState = {
                 driver: null as (ThenableWebDriver | null)
             };
-
-            const allTests = this.tests;
             
             this.beforeAll(function() {
                 sharedState.driver = buildDriver();

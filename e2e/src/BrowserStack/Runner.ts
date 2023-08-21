@@ -61,7 +61,7 @@ export class BrowserStackRunner implements Runner {
 
         SupportedDeviceConfig.forEach(function (cap) {
     
-            test.describe(cap.friendlyBrowserName, async function() {
+            test.describe(cap.friendlyBrowserName, function() {
                 this.timeout(timeout);
     
                 const sharedState = {
@@ -92,7 +92,7 @@ export class BrowserStackRunner implements Runner {
                         await sharedState.driver.quit();
                     }
                 });
-    
+
                 block(function(title, it) {
                     test.it(title, async function() {
                         const driver = sharedState.driver;

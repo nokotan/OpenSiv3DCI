@@ -1,5 +1,5 @@
 node_modules
-test
+dist
 Siv3De2eTest.*
 build
 *.sh

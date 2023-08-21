@@ -27,7 +27,7 @@ eachDevice(function(it) {
         const canvasElement = await driver.findElement(By.id("canvas"));
         await LaunchBrowser(driver, "https://www.google.com");
         await canvasElement.sendKeys(Key.F1);
-        await sleep(50);
+        await sleep(500);
 
         const originalWindow = await driver.getWindowHandle();
         const windows = await driver.getAllWindowHandles();
